@@ -1,0 +1,32 @@
+server:
+  port: 8787
+spring:
+  application:
+    name: consumer
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      # 由Nacos配置中心管理限流规则：规则持久化,保证重启时不会丢失限流规则
+      datasource:
+        flow:
+          nacos:
+            rule-type: flow
+            group-id: SENTINEL_GROUP
+            data-id: ${spring.application.name}-sentinel-flow
+            server-addr: localhost:8848
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+dubbo:
+  # qos端口
+  application:
+    qos-enable: false
+  cloud:
+    # 订阅的服务列表，默认订阅所有服务
+    subscribed-services: provider
+  # 注册中心
+  registry:
+    address: spring-cloud://localhost
+    port: 8848
+
