@@ -1,0 +1,17 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /gateway
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: consumer #规则id
+          uri: lb://consumer # 转发规则
+          predicates: # 路由规则
+            - Path=/gateway/consumer/**
+          filters:  # 过滤器（可选，此处用来过滤掉/gateway/consumer）
+            - StripPrefix=2
