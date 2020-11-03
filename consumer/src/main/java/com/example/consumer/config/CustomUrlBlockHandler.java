@@ -18,6 +18,7 @@ import java.io.IOException;
 public class CustomUrlBlockHandler implements UrlBlockHandler {
     @Override
     public void blocked(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, BlockException e) throws IOException {
+        System.out.println(e.getClass());
         httpServletResponse.setHeader("Content-Type","application/json;charset=UTF-8");
         String message = "{\"code\":999,\"msg\":\"访问人数过多\"}";
         //使用类创建就json对象

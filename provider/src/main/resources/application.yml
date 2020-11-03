@@ -9,18 +9,18 @@ spring:
       discovery:
         server-addr: localhost:8848
 dubbo:
-  # 协议
+  # 鍗忚
   protocol:
     port: -1
     name: dubbo
-  # 服务扫描
+  # 鏈嶅姟鎵弿
   scan:
     base-packages: com.example.provider.dubbo
-  # qos端口
+  # qos绔彛
   application:
     qos-enable: true
     qos-port: 22222
-  # 注册中心
+  # 娉ㄥ唽涓績
   registry:
     address: spring-cloud://localhost
     port: 8848

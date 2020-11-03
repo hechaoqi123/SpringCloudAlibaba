@@ -7,26 +7,27 @@ spring:
     sentinel:
       transport:
         dashboard: localhost:8080
-      # ÓÉNacosÅäÖÃÖĞĞÄ¹ÜÀíÏŞÁ÷¹æÔò£º¹æÔò³Ö¾Ã»¯,±£Ö¤ÖØÆôÊ±²»»á¶ªÊ§ÏŞÁ÷¹æÔò
-      datasource:
-        flow:
+      datasource: #ç”±Nacosç®¡ç†sentinelè§„åˆ™ï¼Œä½¿å…¶è§„åˆ™æŒä¹…åŒ–,ä¿è¯é‡å¯æ—¶ä¸ä¼šä¸¢å¤±sentinelè§„åˆ™
+        flow: #é™æµè§„åˆ™æŒä¹…åŒ– ï¼ˆflowï¼šè‡ªå®šä¹‰æ•°æ®æºåç§°ï¼‰
           nacos:
             rule-type: flow
             group-id: SENTINEL_GROUP
             data-id: ${spring.application.name}-sentinel-flow
-            server-addr: localhost:8848
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        degrade: #é™çº§è§„åˆ™æŒä¹…åŒ– ï¼ˆdegradeï¼šè‡ªå®šä¹‰æ•°æ®æºåç§°ï¼‰
+          nacos:
+            rule-type: degrade
+            group-id: SENTINEL_GROUP
+            data-id: ${spring.application.name}-sentinel-degrade
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
     nacos:
       discovery:
         server-addr: localhost:8848
 dubbo:
-  # qos¶Ë¿Ú
   application:
-    qos-enable: false
+    qos-enable: false #ç¦ç”¨qosè¿ç»´ç«¯å£
   cloud:
-    # ¶©ÔÄµÄ·şÎñÁĞ±í£¬Ä¬ÈÏ¶©ÔÄËùÓĞ·şÎñ
-    subscribed-services: provider
-  # ×¢²áÖĞĞÄ
+    subscribed-services: provider  #è®¢é˜…çš„æœåŠ¡åˆ—è¡¨ï¼Œé»˜è®¤è®¢é˜…æ‰€æœ‰æœåŠ¡
   registry:
-    address: spring-cloud://localhost
-    port: 8848
+    address: spring-cloud://localhost #æŒ‚è½½åˆ°SpringCloudæ³¨å†Œä¸­å¿ƒ
 
