@@ -3,7 +3,25 @@ server:
   servlet:
     context-path: /gateway
 spring:
+  application:
+    name: gateway
   cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      datasource: #由Nacos管理sentinel规则，使其规则持久化,保证重启时不会丢失sentinel规则
+        flow: #限流规则持久化 （flow：自定义数据源名称）
+          nacos:
+            rule-type: gw-flow
+            group-id: SENTINEL_GROUP
+            data-id: ${spring.application.name}-sentinel-flow
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        degrade: #降级规则持久化 （degrade：自定义数据源名称）
+          nacos:
+            rule-type: degrade
+            group-id: SENTINEL_GROUP
+            data-id: ${spring.application.name}-sentinel-degrade
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
     nacos:
       discovery:
         server-addr: localhost:8848
