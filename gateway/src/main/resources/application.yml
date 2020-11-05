@@ -2,11 +2,14 @@ server:
   port: 8083
   servlet:
     context-path: /gateway
+
 spring:
   application:
     name: gateway
   cloud:
+    # sentinel流控、降级
     sentinel:
+      eager: true
       transport:
         dashboard: localhost:8080
       datasource: #由Nacos管理sentinel规则，使其规则持久化,保证重启时不会丢失sentinel规则
@@ -22,14 +25,31 @@ spring:
             group-id: SENTINEL_GROUP
             data-id: ${spring.application.name}-sentinel-degrade
             server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        api: #Api分组规则 （api：自定义数据源名称）
+          nacos:
+            rule-type: gw-api-group
+            group-id: SENTINEL_GROUP
+            data-id: ${spring.application.name}-sentinel-flow-api
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+    # nacos注册中心+配置中心
     nacos:
       discovery:
         server-addr: localhost:8848
+        namespace: public
     gateway:
-      routes:
-        - id: consumer #规则id
-          uri: lb://consumer # 转发规则
-          predicates: # 路由规则
-            - Path=/gateway/consumer/**
-          filters:  # 过滤器（可选，此处用来过滤掉/gateway/consumer）
-            - StripPrefix=2
+      discovery:
+        locator:
+          enabled: true
+dynamic:
+  route:
+    data-id: gateway-routes
+    group: GATEWAY_GROUP
+# 暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
