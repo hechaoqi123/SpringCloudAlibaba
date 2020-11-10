@@ -97,7 +97,6 @@ public class DynamicRouteConfig implements ApplicationEventPublisherAware {
      * @param routesStr Nacos中配置的路由规则json串
      */
     private void updateRouteRule(String routesStr) {
-        System.out.println(this);
         log.info("更新gateway路由规则\n\r{}", routesStr);
         definitionRepository.getRouteDefinitions().collectMap(RouteDefinition::getId).subscribe(oldRoutes -> {
             List<RouteDefinition> nowRoutes = JSONObject.parseArray(routesStr, RouteDefinition.class);
@@ -127,8 +126,6 @@ public class DynamicRouteConfig implements ApplicationEventPublisherAware {
             configService.addListener(dataId, group, new Listener() {
                 @Override
                 public void receiveConfigInfo(String configInfo) {
-                    System.out.println(this);
-                    System.out.println(routeConfig);
                     routeConfig.updateRouteRule(configInfo);
                 }
 
