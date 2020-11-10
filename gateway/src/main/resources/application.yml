@@ -9,7 +9,6 @@ spring:
   cloud:
     # sentinel流控、降级
     sentinel:
-      eager: true
       transport:
         dashboard: localhost:8080
       datasource: #由Nacos管理sentinel规则，使其规则持久化,保证重启时不会丢失sentinel规则
