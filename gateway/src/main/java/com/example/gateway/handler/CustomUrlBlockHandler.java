@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
  * @author hcq
  * @date 2020/11/2 17:31
  */
-@Component
+//@Component
 public class CustomUrlBlockHandler implements BlockRequestHandler {
 
     @Override

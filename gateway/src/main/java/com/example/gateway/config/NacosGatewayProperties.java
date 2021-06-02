@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * @author hcq
  * @date 2020/11/4 19:28
  */
-@Configuration
+//@Configuration
 public class NacosGatewayProperties {
 
     public static final long DEFAULT_TIMEOUT = 30000;

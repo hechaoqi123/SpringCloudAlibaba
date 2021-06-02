@@ -29,7 +29,7 @@ import java.util.concurrent.Executor;
  * @date 2020/11/4 19:31
  */
 @Slf4j
-@Component
+//@Component
 @DependsOn({"nacosProperties"})
 public class DynamicRouteConfig implements ApplicationEventPublisherAware {
 
